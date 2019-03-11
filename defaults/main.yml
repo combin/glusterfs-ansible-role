@@ -20,3 +20,11 @@ glusterfs_packages_EL:
   - {package: "glusterfs-server"}
   - {package: "glusterfs-fuse"}
   - {package: "glusterfs-geo-replication"}
+
+glusterfs_packages_debian:
+  - {package: "glusterfs"}
+  - {package: "glusterfs-cli"}
+  - {package: "glusterfs-libs"}
+  - {package: "glusterfs-server"}
+  - {package: "glusterfs-fuse"}
+  - {package: "glusterfs-geo-replication"}
