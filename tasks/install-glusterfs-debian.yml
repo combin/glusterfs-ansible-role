@@ -1,0 +1,24 @@
+---
+# tasks file for glusterfs-ansible-role
+
+- name: Install glusterfs repository key
+  apt_key:
+    url: https://download.gluster.org/pub/gluster/glusterfs/{{ glusterfs_version }}/rsa.pub
+    state: present
+
+- name: Install glusterfs repository
+  apt_repository:
+    repo: deb https://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/{{ ansible_distribution_version }}/{{ ansible_architecture }}/apt {{ ansible_distribution_release }} main
+    state: present
+
+- name: Install glusterfs
+  yum:
+    name: "{{ item.package }}"
+    state: present
+  with_items: "{{ glusterfs_packages_debian }}"
+
+- name: Make sure glusterfs service is running
+  systemd:
+    name: glusterd
+    state: started
+    enabled: yes
