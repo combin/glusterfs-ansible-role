@@ -19,7 +19,7 @@
   delegate_to: "{{ item[1] }}"
   with_nested: 
     - "{{ glusterfs_volumes }}"
-    - "{{ glusterfs_nodes }}"
+    - "{{ glusterfs_internal_nodes }}"
   when: >
     glusterfs_delete_bricks_dir_after_removal and
     (item[0].state is defined and item[0].state == 'absent') and
