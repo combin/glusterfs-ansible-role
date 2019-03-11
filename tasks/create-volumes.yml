@@ -8,7 +8,7 @@
   delegate_to: "{{ item[1] }}"
   with_nested: 
     - "{{ glusterfs_volumes }}"
-    - "{{ glusterfs_nodes }}"
+    - "{{ glusterfs_internal_nodes }}"
   when: >
     (item[0].state is not defined or item[0].state == 'present') and
     (item[0].nodes is undefined or item[1] in item[0].nodes) and
@@ -30,12 +30,12 @@
     gluster volume create {{ item.volume }} replica {{ item.replica }}  arbiter {{ item.arbiter }} transport {{ item.transport | default('tcp')}}
     {% if item.bricks is defined -%}
       {% for brick in item.bricks -%}
-        {% for node in item.nodes | default(glusterfs_nodes) -%}
+        {% for node in item.nodes | default(glusterfs_internal_nodes) -%}
           {{ node }}:{{ brick + " "}}
         {%- endfor %}
       {%- endfor %}
     {%- else %}
-      {% for node in item.nodes | default(glusterfs_nodes) -%}
+      {% for node in item.nodes | default(glusterfs_internal_nodes) -%}
         {{ node }}:{{ glusterfs_default_bricks_dir }}/{{ item.volume + " " }}
       {%- endfor %}
     {%- endif -%}
@@ -69,7 +69,7 @@
 - name: Create and configure volume(s) without arbiter node
   gluster_volume:
     name: "{{ item.volume }}"
-    cluster: "{% if item.nodes is defined %}{{ item.nodes }}{% else %}{{ glusterfs_nodes }}{% endif %}"
+    cluster: "{% if item.nodes is defined %}{{ item.nodes }}{% else %}{{ glusterfs_internal_nodes }}{% endif %}"
     force: "{{ item.force | default('yes') }}"
     transport: "{{ item.transport | default('tcp') }}"
     state: present
