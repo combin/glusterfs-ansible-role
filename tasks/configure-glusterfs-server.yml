@@ -7,7 +7,7 @@
   changed_when: "'already in peer list' not in glusterfs_peer_probe.stdout"
   delegate_to: "{{ glusterfs_nodes[0] }}"
   run_once: True
-  with_items: "{{ glusterfs_nodes }}"
+  with_items: "{{ glusterfs_internal_nodes }}"
   when: >
     item != glusterfs_nodes[0]
 
