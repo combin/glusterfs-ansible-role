@@ -13,7 +13,7 @@
 
 - name: Install glusterfs on Debian
   include: install-glusterfs-debian.yml
-  when: ansible_distribution == 'debian'
+  when: ansible_distribution == 'Debian'
 
 - name: Configure firewalld
   include: configure-firewalld.yml
