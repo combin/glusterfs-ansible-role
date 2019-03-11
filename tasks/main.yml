@@ -7,6 +7,12 @@
   run_once: True
   when: glusterfs_nodes is undefined
  
+- name: Set fact glusterfs internal nodes list
+  set_fact:
+    glusterfs_internal_nodes: "{{ ansible_play_hosts }}"
+  run_once: True
+  when: glusterfs_internal_nodes is undefined
+ 
 - name: Install glusterfs on CentOS
   include: install-glusterfs-centos.yml
   when: ansible_distribution == 'CentOS'
