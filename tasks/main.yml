@@ -7,9 +7,13 @@
   run_once: True
   when: glusterfs_nodes is undefined
  
-- name: Install glusterfs
-  include: install-glusterfs-server.yml
+- name: Install glusterfs on CentOS
+  include: install-glusterfs-centos.yml
   when: ansible_distribution == 'CentOS'
+
+- name: Install glusterfs on Debian
+  include: install-glusterfs-debian.yml
+  when: ansible_distribution == 'debian'
 
 - name: Configure firewalld
   include: configure-firewalld.yml
